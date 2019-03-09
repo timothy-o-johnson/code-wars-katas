@@ -25,12 +25,18 @@ function tickets (peopleInLine) {
   var canSellToEachPerson = false
   var cashPayment = 0
   var billsNeeded = []
+  var denomination = 1
+  var enough = false
 
   for (i = 0; i < peopleInLine.length; i++) {
     cashPayment = peopleInLine[i]
     addCash(cashPayment)
     changeNeeded = cashPayment - ticketCost
     billsNeeded = getBillsNeeded(changeNeeded)
+    
+    if (exactChange (billsNeeded, denomination)) {
+      makeChange(billsNeeded, denom)
+    }
   }
 }
 
@@ -63,16 +69,29 @@ function getBillsNeeded (changeNeeded) {
   return [[fiftiesNeeded, twentyFivesNeeded], [0, fiftiesNeeded * 2 + twentyFivesNeeded]]
 }
 
-var billsNeeded = getBillsNeeded(25)
+/**
+ * determine if enough change, based on high denominations or low denominations
+ * @param {*} billsNeeded 
+ * @param {*} denomination 
+ */
+function exactChange (billsNeeded, denomination) {
+  var bills = billsNeeded[denomination]
+  var enough50s = cashOnHand[50] >= bills[0] // 50s
+  var enough25s = cashOnHand[25] >= bills[1] // 25s
+
+  return enough50s && enough25s
+}
+
+var cashOnHand = {
+  100: 0,
+  50: 0,
+  25: 3
+}
+
+var billsNeeded = getBillsNeeded(75)
 
 billsNeeded
 
-var cashOnHand = {
-  100: 5,
-  50: 3,
-  25: 2
-}
+var enough = exactChange(billsNeeded, 0)
 
-addCash(25)
-
-cashOnHand
+enough
