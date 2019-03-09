@@ -35,7 +35,7 @@ function tickets (peopleInLine) {
     billsNeeded = getBillsNeeded(changeNeeded)
     
     if (exactChange (billsNeeded, denomination)) {
-      makeChange(billsNeeded, denom)
+      makeChange(billsNeeded, denomination)
     }
   }
 }
@@ -82,16 +82,26 @@ function exactChange (billsNeeded, denomination) {
   return enough50s && enough25s
 }
 
+
+function makeChange (billsNeeded, denomination) {
+  cashOnHand[50] -= billsNeeded[denomination][0]
+  cashOnHand[25] -= billsNeeded[denomination][1]
+}
+
 var cashOnHand = {
   100: 0,
   50: 0,
   25: 3
 }
 
-var billsNeeded = getBillsNeeded(75)
+var billsNeeded = getBillsNeeded(0)
 
 billsNeeded
 
 var enough = exactChange(billsNeeded, 0)
 
 enough
+
+makeChange(billsNeeded, 1)
+
+cashOnHand
