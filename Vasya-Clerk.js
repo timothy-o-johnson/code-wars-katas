@@ -13,6 +13,15 @@ tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to 
 
 */
 
+var peopleInLine = [25, 25, 50, 25, 25, 25, 50, 25, 100]
+var cashOnHand = {
+  100: 0,
+  50: 0,
+  25: 0
+}
+var currentPlaceInLine = 0
+var ticketCost = 25
+
 function tickets (peopleInLine) {
   var ticketCost = 25
   var cashOnHand = {
@@ -33,12 +42,13 @@ function tickets (peopleInLine) {
     addCash(cashPayment)
     changeNeeded = cashPayment - ticketCost
     billsNeeded = getBillsNeeded(changeNeeded)
-    
-    if (exactChange (billsNeeded, denomination)) {
+
+    if (exactChange(billsNeeded, denomination)) {
       makeChange(billsNeeded, denomination)
     }
   }
 }
+
 
 /**
  * adds bills to cashOnHand
@@ -71,8 +81,8 @@ function getBillsNeeded (changeNeeded) {
 
 /**
  * determine if enough change, based on high denominations or low denominations
- * @param {*} billsNeeded 
- * @param {*} denomination 
+ * @param {*} billsNeeded
+ * @param {*} denomination
  */
 function exactChange (billsNeeded, denomination) {
   var bills = billsNeeded[denomination]
@@ -82,26 +92,39 @@ function exactChange (billsNeeded, denomination) {
   return enough50s && enough25s
 }
 
-
 function makeChange (billsNeeded, denomination) {
   cashOnHand[50] -= billsNeeded[denomination][0]
   cashOnHand[25] -= billsNeeded[denomination][1]
 }
 
-var cashOnHand = {
-  100: 0,
-  50: 0,
-  25: 3
+function haveExactChange (cashOnHand, currentPlaceInLine) {
+  var _50s = cashOnHand[50]
+  var _25s = cashOnHand[25]
+  var denomination = 0
+  var isExactChange = true
+
+  cashPayment = peopleInLine[currentPlaceInLine]
+  addCash(cashPayment)
+  changeNeeded = cashPayment - ticketCost
+  var billsNeeded = getBillsNeeded(changeNeeded)
+
+  if (exactChange(billsNeeded, denomination) && (currentPlaceInLine + 1 > peopleInLine.length)) {
+    return true
+  } else if (exactChange(billsNeeded, denomination)) {
+    makeChange(billsNeeded, denomination)
+    isExactChange = haveExactChange(cashOnHand, currentPlaceInLine +1 )
+  } else if (!isExactChange) {
+    // reset
+    cashOnHand[50] = _50s
+    cashOnHand[25] = _25s
+    denomination = 1
+
+    makeChange(billsNeeded, denomination)
+    return haveExactChange(cashOnHand, currentPlaceInLine + 1)
+  } else {
+    return false
+  }
 }
 
-var billsNeeded = getBillsNeeded(0)
+console.log(haveExactChange(cashOnHand, currentPlaceInLine))
 
-billsNeeded
-
-var enough = exactChange(billsNeeded, 0)
-
-enough
-
-makeChange(billsNeeded, 1)
-
-cashOnHand
