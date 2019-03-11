@@ -9,5 +9,27 @@
   "scripts": {
     "test": "jest --watch -o",
     "test-pr": "jest"
+  },
+  "name": "code-wars-katas",
+  "version": "1.0.0",
+  "description": "katas from code wars",
+  "main": "Vasya-Clerk.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothy-o-johnson/code-wars-katas.git"
+  },
+  "keywords": [
+    "kata",
+    "code",
+    "wars"
+  ],
+  "author": "timothy-o-johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timothy-o-johnson/code-wars-katas/issues"
+  },
+  "homepage": "https://github.com/timothy-o-johnson/code-wars-katas#readme",
+  "devDependencies": {
+    "jest": "^24.4.0"
   }
 }
