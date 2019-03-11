@@ -29,24 +29,10 @@ function tickets (peopleInLine) {
     50: 0,
     25: 0
   }
-  var changeNeeded = 0
-  var i
-  var canSellToEachPerson = false
-  var cashPayment = 0
-  var billsNeeded = []
-  var denomination = 1
-  var enough = false
+  var currentPlaceInLine = 0
+  var ticketCost = 25
 
-  for (i = 0; i < peopleInLine.length; i++) {
-    cashPayment = peopleInLine[i]
-    addCash(cashPayment)
-    changeNeeded = cashPayment - ticketCost
-    billsNeeded = getBillsNeeded(changeNeeded)
-
-    if (exactChange(billsNeeded, denomination)) {
-      makeChange(billsNeeded, denomination)
-    }
-  }
+  return haveExactChange(cashOnHand, currentPlaceInLine)
 }
 
 /**
@@ -100,13 +86,14 @@ function makeChange (billsNeeded, denomination) {
   cashOnHand[25] -= billsNeeded[denomination][1]
 }
 
-export function haveExactChange (cashOnHand, currentPlaceInLine) {
+function haveExactChange (cashOnHand, currentPlaceInLine) {
   var _50s = cashOnHand[50]
   var _25s = cashOnHand[25]
   var denomination = 0
   var isExactChange = true
   var lastCustomer = currentPlaceInLine + 1 >= peopleInLine.length
   var billsNeeded
+  var changeNeeded
 
   var cashPayment = peopleInLine[currentPlaceInLine]
   addCash(cashPayment)
@@ -132,13 +119,12 @@ export function haveExactChange (cashOnHand, currentPlaceInLine) {
 
     if (isExactChange && lastCustomer) {
       isExactChange = true // calling this out explicity for legibility
-    } else if(isExactChange) {
+    } else if (isExactChange) {
       // see if we have the exact change for the next person in line
       isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1)
     } else {
       isExactChange = false
     }
-    
   } else {
     // if we can't make change...
     isExactChange = false
@@ -148,3 +134,5 @@ export function haveExactChange (cashOnHand, currentPlaceInLine) {
 }
 
 console.log(haveExactChange(cashOnHand, currentPlaceInLine))
+
+//module.exports = tickets
