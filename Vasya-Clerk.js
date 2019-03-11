@@ -100,7 +100,7 @@ function makeChange (billsNeeded, denomination) {
   cashOnHand[25] -= billsNeeded[denomination][1]
 }
 
-function haveExactChange (cashOnHand, currentPlaceInLine) {
+export function haveExactChange (cashOnHand, currentPlaceInLine) {
   var _50s = cashOnHand[50]
   var _25s = cashOnHand[25]
   var denomination = 0

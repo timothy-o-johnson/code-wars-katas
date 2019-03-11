@@ -1,0 +1,13 @@
+{
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "programming"
+    ],
+    "verbose": true
+  },
+  "scripts": {
+    "test": "jest --watch -o",
+    "test-pr": "jest"
+  }
+}
