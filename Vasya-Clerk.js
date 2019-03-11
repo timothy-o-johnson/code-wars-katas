@@ -13,7 +13,7 @@ tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to 
 
 */
 
-var peopleInLine = [25, 25, 50, 25, 25, 25, 50, 25, 100]
+var peopleInLine = [25, 50, 25, 25, 25, 25, 25, 50, 100, 25, 100]
 var cashOnHand = {
   100: 0,
   50: 0,
@@ -48,7 +48,6 @@ function tickets (peopleInLine) {
     }
   }
 }
-
 
 /**
  * adds bills to cashOnHand
@@ -91,7 +90,11 @@ function exactChange (billsNeeded, denomination) {
 
   return enough50s && enough25s
 }
-
+/**
+ * deduct cost of ticket (billsNeeded) from cashbox
+ * @param {*} billsNeeded
+ * @param {*} denomination
+ */
 function makeChange (billsNeeded, denomination) {
   cashOnHand[50] -= billsNeeded[denomination][0]
   cashOnHand[25] -= billsNeeded[denomination][1]
@@ -102,29 +105,46 @@ function haveExactChange (cashOnHand, currentPlaceInLine) {
   var _25s = cashOnHand[25]
   var denomination = 0
   var isExactChange = true
+  var lastCustomer = currentPlaceInLine + 1 >= peopleInLine.length
+  var billsNeeded
 
-  cashPayment = peopleInLine[currentPlaceInLine]
+  var cashPayment = peopleInLine[currentPlaceInLine]
   addCash(cashPayment)
   changeNeeded = cashPayment - ticketCost
-  var billsNeeded = getBillsNeeded(changeNeeded)
+  billsNeeded = getBillsNeeded(changeNeeded)
+  isExactChange = exactChange(billsNeeded, denomination)
 
-  if (exactChange(billsNeeded, denomination) && (currentPlaceInLine + 1 > peopleInLine.length)) {
-    return true
-  } else if (exactChange(billsNeeded, denomination)) {
+  if (isExactChange && lastCustomer) {
+    isExactChange = true
+  } else if (isExactChange) {
     makeChange(billsNeeded, denomination)
-    isExactChange = haveExactChange(cashOnHand, currentPlaceInLine +1 )
+    // then see if we have the exact change for the next person in line
+    isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1)
+
+    // else if we don't have the exact change using 50s and 25s, lets try all 25s (denomination = 1))
   } else if (!isExactChange) {
-    // reset
+    // reset cashOnHand, in case been altered in an earlier call
     cashOnHand[50] = _50s
     cashOnHand[25] = _25s
-    denomination = 1
+    denomination = 1 // all 25s
 
-    makeChange(billsNeeded, denomination)
-    return haveExactChange(cashOnHand, currentPlaceInLine + 1)
+    isExactChange = exactChange(billsNeeded, denomination)
+
+    if (isExactChange && lastCustomer) {
+      isExactChange = true // calling this out explicity for legibility
+    } else if(isExactChange) {
+      // see if we have the exact change for the next person in line
+      isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1)
+    } else {
+      isExactChange = false
+    }
+    
   } else {
-    return false
+    // if we can't make change...
+    isExactChange = false
   }
+
+  return isExactChange
 }
 
 console.log(haveExactChange(cashOnHand, currentPlaceInLine))
-
