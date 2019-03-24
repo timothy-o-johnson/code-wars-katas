@@ -16,8 +16,8 @@ export function maxSequence (arr) {
   var sum = ''
   var solution 
 
-  for (var i = 0; i < arr.length; i++) {
-    for (var j = 0; j < arr.length; j++) {
+  for (var i = 0; i < arr.length ; i++) {
+    for (var j = 0; j < arr.length + 1; j++) {
       sum = arr.slice(i, j).join('+')
       sum = eval(sum)
       if (sum > max) {
@@ -33,5 +33,5 @@ export function maxSequence (arr) {
   return max
 }
 
-var arr = [-2, 1, 4, -3, 9, 12, -5]
+var arr = [25, 1, 0, -1000, -1, -1, 100]
 console.log(maxSequence(arr))
