@@ -13,33 +13,32 @@ tickets([25, 25, 50, 50, 100]) // => NO. Vasya will not have the right bills to 
 
 */
 
-var peopleInLine = [25, 50, 25, 25, 25, 25, 25, 50, 100, 25, 100]
-var cashOnHand = {
-  100: 0,
-  50: 0,
-  25: 0
-}
-var currentPlaceInLine = 0
-var ticketCost = 25
+//var peopleInLine = [25, 50, 25, 100]
+// var cashOnHand = {
+//   100: 0,
+//   50: 0,
+//   25: 0
+// }
+// var currentPlaceInLine = 0
+// var ticketCost = 25
 
 function tickets (peopleInLine) {
-  var ticketCost = 25
+  //var ticketCost = 25
   var cashOnHand = {
     100: 0,
     50: 0,
     25: 0
   }
   var currentPlaceInLine = 0
-  var ticketCost = 25
 
-  return haveExactChange(cashOnHand, currentPlaceInLine)
+  return haveExactChange(cashOnHand, currentPlaceInLine, peopleInLine)
 }
 
 /**
  * adds bills to cashOnHand
  * @param {*} cashPayment
  */
-function addCash (cashPayment) {
+function addCash (cashPayment, cashOnHand) {
   cashOnHand[cashPayment]++
 }
 
@@ -69,7 +68,7 @@ function getBillsNeeded (changeNeeded) {
  * @param {*} billsNeeded
  * @param {*} denomination
  */
-function exactChange (billsNeeded, denomination) {
+function exactChange (billsNeeded, denomination, cashOnHand) {
   var bills = billsNeeded[denomination]
   var enough50s = cashOnHand[50] >= bills[0] // 50s
   var enough25s = cashOnHand[25] >= bills[1] // 25s
@@ -81,12 +80,12 @@ function exactChange (billsNeeded, denomination) {
  * @param {*} billsNeeded
  * @param {*} denomination
  */
-function makeChange (billsNeeded, denomination) {
+function makeChange (billsNeeded, denomination, cashOnHand) {
   cashOnHand[50] -= billsNeeded[denomination][0]
   cashOnHand[25] -= billsNeeded[denomination][1]
 }
 
-function haveExactChange (cashOnHand, currentPlaceInLine) {
+function haveExactChange (cashOnHand, currentPlaceInLine, peopleInLine) {
   var _50s = cashOnHand[50]
   var _25s = cashOnHand[25]
   var denomination = 0
@@ -94,19 +93,20 @@ function haveExactChange (cashOnHand, currentPlaceInLine) {
   var lastCustomer = currentPlaceInLine + 1 >= peopleInLine.length
   var billsNeeded
   var changeNeeded
+  var ticketCost = 25
 
   var cashPayment = peopleInLine[currentPlaceInLine]
-  addCash(cashPayment)
+  addCash(cashPayment, cashOnHand)
   changeNeeded = cashPayment - ticketCost
   billsNeeded = getBillsNeeded(changeNeeded)
-  isExactChange = exactChange(billsNeeded, denomination)
+  isExactChange = exactChange(billsNeeded, denomination, cashOnHand)
 
   if (isExactChange && lastCustomer) {
     isExactChange = true
   } else if (isExactChange) {
-    makeChange(billsNeeded, denomination)
+    makeChange(billsNeeded, denomination, cashOnHand)
     // then see if we have the exact change for the next person in line
-    isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1)
+    isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1, peopleInLine)
 
     // else if we don't have the exact change using 50s and 25s, lets try all 25s (denomination = 1))
   } else if (!isExactChange) {
@@ -115,13 +115,14 @@ function haveExactChange (cashOnHand, currentPlaceInLine) {
     cashOnHand[25] = _25s
     denomination = 1 // all 25s
 
-    isExactChange = exactChange(billsNeeded, denomination)
+    isExactChange = exactChange(billsNeeded, denomination, cashOnHand)
 
     if (isExactChange && lastCustomer) {
       isExactChange = true // calling this out explicity for legibility
     } else if (isExactChange) {
+      makeChange(billsNeeded, denomination, cashOnHand)
       // see if we have the exact change for the next person in line
-      isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1)
+      isExactChange = haveExactChange(cashOnHand, currentPlaceInLine + 1, peopleInLine)
     } else {
       isExactChange = false
     }
@@ -132,7 +133,8 @@ function haveExactChange (cashOnHand, currentPlaceInLine) {
 
   return isExactChange
 }
+//var peopleInLine = [25, 25, 25, 100, 25, 50, 25, 100, 25, 50, 25, 100, 25, 25, 25, 100, 25, 25, 25, 100, 100, 50]
 
-console.log(haveExactChange(cashOnHand, currentPlaceInLine))
-
-//module.exports = tickets
+//console.log(tickets(peopleInLine))
+//console.log(haveExactChange(cashOnHand, currentPlaceInLine))
+ module.exports = tickets
