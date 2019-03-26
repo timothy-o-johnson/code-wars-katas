@@ -1,7 +1,6 @@
 const lastNumberAndSteps = require('./a-rule-of-divisibility-by-7')
 
 describe('lastNumberAndSteps', () => {
-
   test('477557101 should return [28, 7] ', () => {
     var expected = [28, 7]
     expect(lastNumberAndSteps(477557101, 0)).toEqual(expect.arrayContaining(expected))
@@ -26,7 +25,6 @@ describe('lastNumberAndSteps', () => {
     var expected = [7, 2]
     expect(lastNumberAndSteps(1603, 0)).toEqual(expect.arrayContaining(expected))
   })
-
 
   test('null should return [0, 0] ', () => {
     var expected = [0, 0]
