@@ -22,4 +22,9 @@ describe('lastNumberAndSteps', () => {
     expect(lastNumberAndSteps(7, 0)).toEqual(expect.arrayContaining(expected))
   })
 
+  test('1603 should return [7, 2] ', () => {
+    var expected = [7, 2]
+    expect(lastNumberAndSteps(1603, 0)).toEqual(expect.arrayContaining(expected))
+  })
+
 })
