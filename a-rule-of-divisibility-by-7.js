@@ -49,11 +49,7 @@ function lastNumberAndSteps (number, steps) {
 
     length = number.length
 
-    if (length <= 2) {
-      return [parseInt(number), steps]
-    } else {
-      return lastNumberAndSteps(parseInt(number), steps)
-    }
+      return length <= 2 ? [parseInt(number), steps] :  lastNumberAndSteps(parseInt(number), steps)
   }
 }
 
