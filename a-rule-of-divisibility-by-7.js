@@ -29,10 +29,12 @@ seven(477557101) should return [28, 7]
 */
 
 function seven (m) {
-
-  return lastNumberAndSteps(m, 0)
+  if (m === null || m === 0) {
+    return [0, 0]
+  } else {
+    return lastNumberAndSteps(m, 0)
+  }
 }
-
 function lastNumberAndSteps (number, steps) {
   number = number.toString()
   var length = number.length
@@ -57,5 +59,4 @@ function lastNumberAndSteps (number, steps) {
 
 console.log(lastNumberAndSteps(1603, 0))
 
-
-module.exports = lastNumberAndSteps
+module.exports = seven

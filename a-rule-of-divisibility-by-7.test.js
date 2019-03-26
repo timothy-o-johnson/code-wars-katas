@@ -12,8 +12,8 @@ describe('lastNumberAndSteps', () => {
     expect(lastNumberAndSteps(42, 0)).toEqual(expect.arrayContaining(expected))
   })
 
-  test('0 should return [0, 1] ', () => {
-    var expected = [0, 1]
+  test('0 should return [0, 0] ', () => {
+    var expected = [0, 0]
     expect(lastNumberAndSteps(0, 0)).toEqual(expect.arrayContaining(expected))
   })
 
@@ -27,4 +27,9 @@ describe('lastNumberAndSteps', () => {
     expect(lastNumberAndSteps(1603, 0)).toEqual(expect.arrayContaining(expected))
   })
 
+
+  test('null should return [0, 0] ', () => {
+    var expected = [0, 0]
+    expect(lastNumberAndSteps(null, 0)).toEqual(expect.arrayContaining(expected))
+  })
 })
