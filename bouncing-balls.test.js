@@ -25,9 +25,9 @@ describe('validation', () => {
     expect(bouncingball(h, bounce, window)).toEqual(-1)
   })
 
-  xtest('return -1 if h not a float', () => {
-    var h = 1
-    var bounce = 0.6
+  test('return -1 if "bounce" greater than 1', () => {
+    var h = 1.2
+    var bounce = 3
     var window = -2
     
     expect(bouncingball(h, bounce, window)).toEqual(-1)
