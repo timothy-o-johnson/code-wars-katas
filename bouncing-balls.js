@@ -24,13 +24,24 @@ h = 3, bounce = 1, window = 1.5, result is -1 (Condition 2) not fulfilled).
 */
 
 function bouncingBall (h, bounce, window) {
-  if (!(h > 0 && isFloat(h) && bounce > 0 && bounce < 1 && isFloat(bounce) && window < h)) {
+  if (!(h > 0 && bounce > 0 && bounce < 1 && window < h)) {
     return -1
-  } // your code here
+  }
+
+  var sightings = 0
+
+  while (h > window) {
+    h *= bounce
+    sightings += 2
+  }
+
+  return sightings - 1
 }
 
 function isFloat (x) {
-  return !!(x % 1)
+  return Number(x) === x && x % 1 !== 0
 }
 
-module.exports = bouncingBall
+module.exports = { bouncingBall, isFloat }
+
+console.log(bouncingBall(30, 0.66, 1.5))
