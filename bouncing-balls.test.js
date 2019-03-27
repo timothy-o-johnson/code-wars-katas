@@ -32,4 +32,12 @@ describe('validation', () => {
     
     expect(bouncingball(h, bounce, window)).toEqual(-1)
   })
+
+  test('return -1 if "bounce" is not a float', () => {
+    var h = 1.2
+    var bounce = 3.5
+    var window = -2
+    
+    expect(bouncingball(h, bounce, window)).toEqual(-1)
+  })
 })

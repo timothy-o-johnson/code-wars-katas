@@ -24,7 +24,7 @@ h = 3, bounce = 1, window = 1.5, result is -1 (Condition 2) not fulfilled).
 */
 
 function bouncingBall (h, bounce, window) {
-  if (!(h > 0 && isFloat(h) && bounce > 0 && bounce < 1 /*&& isFloat(bounce) && window < h)*/)) {
+  if (!(h > 0 && isFloat(h) && bounce > 0 && bounce < 1 && isFloat(bounce) /*&& window < h)*/)) {
     return -1
   } // your code here
 }
