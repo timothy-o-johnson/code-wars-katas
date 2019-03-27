@@ -40,4 +40,12 @@ describe('validation', () => {
     
     expect(bouncingball(h, bounce, window)).toEqual(-1)
   })
+
+  test('return -1 if "window" is greater than "h" ', () => {
+    var h = 1.2
+    var bounce = 0.6
+    var window = 3
+    
+    expect(bouncingball(h, bounce, window)).toEqual(-1)
+  })
 })
