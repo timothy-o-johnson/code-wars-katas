@@ -24,12 +24,27 @@ function diamond (n) {
     return null
   }
 
-  
-  var diam = ' *\n***\n *\n'
+  var diam = ''
+  var token = '*'
 
-  console.log(diam)
+  var padding = Math.floor(n / 2) 
+  var repeat = 1
+
+  while (padding > 0) {
+    diam += ' '.repeat(padding--) + token.repeat(repeat) + '\n' 
+    repeat += 2 
+  }
+
+  repeat = n 
+
+  while (repeat > 0) {
+    diam += ' '.repeat(padding++) + token.repeat(repeat) + '\n' 
+    repeat -= 2 
+  }
 
   return diam
 }
 
 module.exports = { diamond }
+
+console.log(diamond(7))
