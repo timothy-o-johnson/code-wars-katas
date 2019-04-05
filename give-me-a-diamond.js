@@ -24,25 +24,35 @@ function diamond (n) {
     return null
   }
 
-  var diam = ''
-  var token = '*'
+  var row = ''
+  var triangle = []
+  var diamondTop
+  var diamondBottom
+  var wholeDiamond = []
 
-  var padding = Math.floor(n / 2) 
+  var padding = Math.floor(n / 2)
   var repeat = 1
 
-  while (padding > 0) {
-    diam += ' '.repeat(padding--) + token.repeat(repeat) + '\n' 
-    repeat += 2 
+  // create diamond top
+  while (padding > -1) {
+    row = ' '.repeat(padding--) + '*'.repeat(repeat) + '\n'
+    repeat += 2
+    triangle.push(row)
   }
 
-  repeat = n 
+  // save it
+  diamondTop = Array.from(triangle)
 
-  while (repeat > 0) {
-    diam += ' '.repeat(padding++) + token.repeat(repeat) + '\n' 
-    repeat -= 2 
-  }
+  // shorten it
+  triangle.pop()
 
-  return diam
+  // flip it upside down
+  diamondBottom = triangle.reverse()
+
+  // combine top and bottom 
+  wholeDiamond = diamondTop.concat(diamondBottom)
+
+  return wholeDiamond.join('')
 }
 
 module.exports = { diamond }
