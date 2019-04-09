@@ -9,6 +9,7 @@ function rot13 (word) {
   var charCode
 
   letters = word.split('') 
+  
   letters.forEach((letter) => {
      charCode = letter.charCodeAt(0) 
      charCode = convertToRot13CharCode(charCode)
