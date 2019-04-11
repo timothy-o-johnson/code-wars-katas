@@ -27,25 +27,17 @@ gap(4, 130, 200) --> [163, 167] or (163, 167) or {163, 167}
 gap(6,100,110) --> nil or {0, 0} : between 100 and 110 we have 101, 103, 107, 109 but 101-107is not a 6-gap because there is 103in between and 103-109is not a 6-gap because there is 107in between. */
 
 function gap (g, m, n) {
-  var primeNumbers = []
-  var size
   var last
   var secondToLast
 
   for (var i = m; i < n; i++) {
     if (isPrime(i, 2)) {
-      primeNumbers.push(i)
+      secondToLast = last
+      last = i
 
-      size = primeNumbers.length
-      last = primeNumbers[size - 1]
-      secondToLast = primeNumbers[size - 2]
-
-      if (size > 1) {
-        if ((last - secondToLast) === g) {
-          return [secondToLast, last]
-        }
+      if (last - secondToLast === g) {
+        return [secondToLast, last]
       }
-    
     }
   }
   return null
@@ -65,7 +57,4 @@ function isPrime (number, i) {
   return isPrime(number, i + 1)
 }
 
-
-console.log(gap(6, 70, 100))
-
-module.exports = { gap, isPrime }
+module.exports = {gap, isPrime}
