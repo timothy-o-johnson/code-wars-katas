@@ -19,7 +19,7 @@ export function maxSequence (arr) {
   for (var i = 0; i < arr.length ; i++) {
     for (var j = 0; j < arr.length + 1; j++) {
       sum = arr.slice(i, j).join('+')
-      sum = eval(sum)
+      sum = Function('return '+ sum)()
       if (sum > max) {
         max = sum
         beg = i
