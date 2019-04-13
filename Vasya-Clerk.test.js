@@ -1,15 +1,29 @@
-import {haveExactChange} from './Vasya-Clerk'
+/* global describe, test, expect */
 
-describe('haveExactChange', () => {
-  // mockup of item objects
+const tickets = require('./Vasya-Clerk')
 
+describe('tickets', () => {
   test('Should return true if all customers have exact change', () => {
-    var peopleInLine = [25]
-    expect(haveExactChange(peopleInLine)).toEqual(true)
+    var peopleInLine = [25, 25, 25, 25]
+
+    expect(tickets(peopleInLine)).toEqual(true)
   })
-  test('Should return 0 if there are no transactions', () => {
-    var itemObjs = []
-    expect(ReturnAuthVerify.getTransactionsTotal(itemObjs)).toEqual(0)
+
+  test('Should return false for this line of customers', () => {
+    var peopleInLine = [25, 25, 25, 100, 25, 50, 25, 100, 25, 50, 25, 100, 25, 25, 25, 100, 25, 25, 25, 100, 100, 50]
+
+    expect(tickets(peopleInLine)).toEqual(false)
+  })
+
+  test('Should return false for this line of customers', () => {
+    var peopleInLine = [25, 25, 50, 100, 25, 25, 25, 100, 25, 50, 25, 100, 100, 50]
+
+    expect(tickets(peopleInLine)).toEqual(false)
+  })
+
+  test('Should return false for this line of customers', () => {
+    var peopleInLine = [25, 50, 25, 100, 25, 25, 50, 100, 25, 50, 25, 100, 25, 50, 25, 100, 25, 25, 25, 100, 50, 50]
+
+    expect(tickets(peopleInLine)).toEqual(false)
   })
 })
-

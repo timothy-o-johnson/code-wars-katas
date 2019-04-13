@@ -8,13 +8,10 @@ Empty list is considered to have zero greatest sum. Note that the empty list or 
 
 */
 
-export function maxSequence (arr) {
+function maxSequence (arr) {
   // for each num in arr add one additional number to sub array
   var max = 0
-  var beg
-  var end
   var sum = ''
-  var solution 
 
   for (var i = 0; i < arr.length ; i++) {
     for (var j = 0; j < arr.length + 1; j++) {
@@ -22,16 +19,14 @@ export function maxSequence (arr) {
       sum = Function('return '+ sum)()
       if (sum > max) {
         max = sum
-        beg = i
-        end = j
       }
     }
   }
-
- // solution = arr.slice(beg,end)
 
   return max
 }
 
 var arr = [25, 1, 0, -1000, -1, -1, 100]
 console.log(maxSequence(arr))
+
+module.exports = maxSequence

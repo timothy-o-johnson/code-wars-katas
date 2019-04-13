@@ -1,4 +1,4 @@
-import { maxSequence } from './Maximum-Subarray-Sum'
+const maxSequence = require('./Maximum-Subarray-Sum')
 
 describe('maxSequence', () => {
   // mockup of item objects
